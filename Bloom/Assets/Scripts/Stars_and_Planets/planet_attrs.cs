@@ -14,6 +14,9 @@ public class planet_attrs : MonoBehaviour {
 	//rotation speed
 	public float speed;
 	
+	//name (random float)
+	public float pl_name;
+	
 	//**attributes**\\
 	//TODO: Base this mechanic on real factors such as atmosphere, temperature, and resources
 	//whether or not population can spread here
@@ -29,12 +32,14 @@ public class planet_attrs : MonoBehaviour {
 	
 	
 	// Use this for initialization
-	void Start () {
-	
+	void Start () {		
+		pl_name = UnityEngine.Random.Range(100000f,700000f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		//orbit sun
 		transform.RotateAround(sun_location, new Vector3(0,0,1), speed*Time.deltaTime);
+		
 	}
 }

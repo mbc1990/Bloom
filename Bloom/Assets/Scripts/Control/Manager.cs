@@ -25,6 +25,7 @@ public class Manager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
 	
 	}
 	
@@ -65,7 +66,7 @@ public class Manager : MonoBehaviour {
 		
 		//rotation speed
 		//TODO: adjust angle (speed) based on distance so that farther planets don't orbit faster than closer ones
-		float r_speed = UnityEngine.Random.Range(2f, 8f);
+		float r_speed = UnityEngine.Random.Range(.5f, 3f);
 		p_script.speed = r_speed;
 		
 		//liveability
