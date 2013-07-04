@@ -10,10 +10,24 @@ public class planet_attrs : MonoBehaviour {
 	
 	//rotates around this
 	public Vector3 sun_location;
+	
+	//rotation speed
 	public float speed;
 	
-	//TODO: Decide on/implement attributes
-
+	//**attributes**\\
+	//TODO: Base this mechanic on real factors such as atmosphere, temperature, and resources
+	//whether or not population can spread here
+	public bool liveable;
+	
+	//starts at 0, if it's liveable population may spread here
+	public int population;
+	
+	//amount of resource x in the planet
+	public int resource_x;
+	
+	//TODO: native alien population mechanic
+	
+	
 	// Use this for initialization
 	void Start () {
 	

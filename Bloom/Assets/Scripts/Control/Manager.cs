@@ -8,6 +8,9 @@ public class Manager : MonoBehaviour {
 	public GameObject planet; //sphere prefab for planet with basic planet_attr script
 	public GameObject star; //sphere prefab for sun with basic star_attr script
 	
+	//global vars
+	public GameObject homeworld;
+	
 	
 	// Use this for initialization
 	void Start () {
@@ -15,6 +18,8 @@ public class Manager : MonoBehaviour {
 		
 		//Generate home solar system
 		GameObject s = GenerateSolarSystem(new Vector3(0,0,0), .5f);
+		homeworld = GeneratePlanet(new Vector3(0,0,0), 1f);
+		homeworld.transform.localScale *= 2;
 		
 	}
 	
@@ -32,7 +37,7 @@ public class Manager : MonoBehaviour {
 		//size and position
 		//TODO: generate size randomly
 		s.transform.position = sun_location;
-		s.transform.localScale += new Vector3(1000f,1000f,1000f);
+		s.transform.localScale += new Vector3(600f,600f,600f);
 		//generate sun attributes (heat, volume)
 		
 		
@@ -40,20 +45,15 @@ public class Manager : MonoBehaviour {
 		float num_planets = UnityEngine.Random.Range(7f,14f);
 		num_planets = Mathf.Floor(num_planets);
 		for(int i = 0; i < (int)num_planets; i++) {
-			GeneratePlanet(sun_location,true);	
+			GeneratePlanet(sun_location,liveable);	
 		}
 		
-		//for each number
-			//instantiate planet
-			//generate planet attributes (liveability, size, orbit speed, gas vs rocky)
-			//set parent location (for orbitting)
-			//make planet child of sun
 		return s;
 	}
 	
 	//Instantiates a planet within the solar system, sets and picks attributes, picks location
 	//TODO: Random selection of attributes
-	GameObject GeneratePlanet(Vector3 sun_location, bool liveable) {
+	GameObject GeneratePlanet(Vector3 sun_location, float liveable) {
 		GameObject p = Instantiate(planet) as GameObject;
 		planet_attrs p_script = p.GetComponent<planet_attrs>();
 		p_script.sun_location = sun_location;
@@ -68,8 +68,12 @@ public class Manager : MonoBehaviour {
 		float r_speed = UnityEngine.Random.Range(2f, 8f);
 		p_script.speed = r_speed;
 		
+		//liveability
+		float live = UnityEngine.Random.Range(0, 1f);
+		p_script.liveable = (live < liveable) ? true : false;
 		
-		
+		//resource X amount
+		p_script.resource_x = (int)UnityEngine.Random.Range (0, 400f);
 		
 		return p;
 	}
