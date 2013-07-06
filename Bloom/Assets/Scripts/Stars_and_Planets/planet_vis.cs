@@ -54,7 +54,7 @@ public class planet_vis : MonoBehaviour {
 	
 	void OnGUI() {
 		//new box
-		if(info_box) {
+		if(info_box && !GUI_locks.PLAN_MISSION) {
 			GUI.Box(new Rect(info_box_loc.x,info_box_loc.y,100,90), attr_script.pl_name.ToString());
 			if(GUI.Button(new Rect(info_box_loc.x,info_box_loc.y+20,100,20), "Send Mission")) {
 				//Create a new gameobject for the mission and add a mission_planning_gui to it
