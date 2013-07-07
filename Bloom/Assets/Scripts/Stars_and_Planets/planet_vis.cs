@@ -60,6 +60,7 @@ public class planet_vis : MonoBehaviour {
 				//Create a new gameobject for the mission and add a mission_planning_gui to it
 				GameObject mis = new GameObject();
 				mis.AddComponent<mission_planning_gui>();
+				mis.GetComponent<mission_planning_gui>().target = gameObject;
 			}
 		}
 	}

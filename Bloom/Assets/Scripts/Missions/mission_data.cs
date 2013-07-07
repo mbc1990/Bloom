@@ -4,7 +4,10 @@ using System.Collections;
 public class mission_data : MonoBehaviour {
 	
 	//mission code, initialized and set by GUI when the probe is "launched"
-	string code;
+	public string code;
+	
+	//current destination
+	public GameObject dest;
 	
 	//list of gameobjects w/ module script & "interface" like module script that has the module name
 	public ArrayList modules = new ArrayList();
@@ -17,6 +20,8 @@ public class mission_data : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+	
+		//TODO: movement toward destination
 	
 	}
 	

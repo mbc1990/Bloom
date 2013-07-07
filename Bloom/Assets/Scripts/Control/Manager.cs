@@ -7,6 +7,7 @@ public class Manager : MonoBehaviour {
 	//Connect to editor
 	public GameObject planet; //sphere prefab for planet with basic planet_attr script
 	public GameObject star; //sphere prefab for sun with basic star_attr script
+	public GameObject probe; //cube probe prefab
 	
 	//global vars
 	public GameObject homeworld;
