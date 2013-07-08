@@ -28,11 +28,20 @@ public class mission_manager : MonoBehaviour {
 	//called when a mission is launched from mision_planning_gui
 	//does any initialization (such as calling a special launch visual effect in mission_vis) and adds the probe to the list of active missions 
 	public void Launch(GameObject probe) {
-		//give it a cube prefab for temporarily visualization purposes
+		//give it a cube prefab for temporarily visualization purpose
 		GameObject pref = Instantiate(m.probe) as GameObject;
-		//TODO: Instantiate the probecube at the right place
-		pref.transform.position = new Vector3(0, 500, 0);
-		probe.transform.parent = pref.transform;
+		
+		//start probe off at the homeworld
+		pref.transform.position = m.homeworld.transform.position; 
+		pref.transform.parent = probe.transform;
+		
+		//make it visibly large
+		pref.transform.localScale *= 50;
+		
+		//start the mission
+		probe.GetComponent<mission_data>().mission_started = true;
+		
+		//add to list of active probes
 		active_missions.Add(probe);
 	}
 }

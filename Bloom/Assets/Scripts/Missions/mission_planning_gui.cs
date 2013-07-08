@@ -37,7 +37,7 @@ public class mission_planning_gui : MonoBehaviour {
 	
 	void OnGUI() {
 		//background
-		GUI.Box(new Rect(Screen.width/8,Screen.height/10,6 * Screen.width/8,8*Screen.height/10), "new mission");
+		GUI.Box(new Rect(Screen.width/8,Screen.height/10,6 * Screen.width/8,8*Screen.height/10), "Mission to "+target.GetComponent<planet_attrs>().pl_name);
 		
 		//available modules background
 		GUI.Box(new Rect(Screen.width/8,Screen.height/10+20,100,8*Screen.height/10 - 20), "Available");

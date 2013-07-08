@@ -78,8 +78,8 @@ public class Manager : MonoBehaviour {
 		p_script.resource_x = (int)UnityEngine.Random.Range (0, 400f);
 		
 		//random size
-		float r_size = UnityEngine.Random.Range(.5f, 3);
-		p.transform.localScale *= r_size;
+	//	float r_size = UnityEngine.Random.Range(.5f, 3);
+	//	p.transform.localScale *= r_size;
 		
 		return p;
 	}
