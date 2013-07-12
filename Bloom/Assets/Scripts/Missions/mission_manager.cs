@@ -33,7 +33,7 @@ public class mission_manager : MonoBehaviour {
 		
 		//start probe off at the homeworld
 		pref.transform.position = m.homeworld.transform.position; 
-		pref.transform.parent = probe.transform;
+		probe.transform.parent = pref.transform;
 		
 		//make it visibly large
 		pref.transform.localScale *= 50;
