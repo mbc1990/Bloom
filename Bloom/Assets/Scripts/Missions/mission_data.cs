@@ -68,11 +68,44 @@ public class mission_data : MonoBehaviour {
 					transform.parent.position = Vector3.MoveTowards(transform.parent.position, dest.transform.position, SPEED * Time.deltaTime);
 				}
 			}
+			
+			//execute the probecode
+			run_code();
 		}
 	}
 	
 	//called from update, this method interprets the code and calls the various functions associated with the attached modules
+	//TODO: Exception handling & incorrect probe code handling 
 	void run_code() {
+		//tokenize the code
+		//TODO: run this once, not every time the code is executed
+		ArrayList toks = Tokenize ();
+		foreach(string e in toks) {
+			print (e);	
+		}
+		Debug.Break();
+	}
+	
+	//this splits the code at whitespace to provide a list of tokens
+	//it also may do some pre-processing of the code (such as giving a jump-to index to if statements)
+	private ArrayList Tokenize() {
+		//split at spaces
+		//TODO: split at linebreaks as well
+		string[] sp = code.Split(' ');
+		ArrayList toks = new ArrayList();
+		toks.AddRange(sp);
+		
+		//remove indentation
+		ArrayList to_remove = new ArrayList();
+		foreach(string e in toks) {
+			if(e.Length == 0) {
+				to_remove.Add (e);	
+			}
+		}
+		foreach(string e in to_remove) {
+			toks.Remove(e);	
+		}
+		return toks;
 		
 	}
 }

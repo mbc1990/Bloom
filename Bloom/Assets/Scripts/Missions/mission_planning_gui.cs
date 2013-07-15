@@ -115,6 +115,13 @@ public class mission_planning_gui : MonoBehaviour {
 			data.modules.Add(module); //add the newly created module to the probe's list of modules
 			module.transform.parent = data.transform;
 		}
+		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+160,100,20), "Comm")) {
+			GameObject module = new GameObject(); //a module (in the game design sense) consists of a module gameobject with module specific scripts attached, as well as the module_info scrpt
+			module.AddComponent<module_info>();
+			module.GetComponent<module_info>().mod_name = "Comm";
+			data.modules.Add(module); //add the newly created module to the probe's list of modules
+			module.transform.parent = data.transform;
+		}
 		
 		//buttons for each module already attached to the mission_data's list of modules, to remove them from the list
 		int button_offset = 1;
