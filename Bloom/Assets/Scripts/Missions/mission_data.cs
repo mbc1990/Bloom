@@ -90,8 +90,10 @@ public class mission_data : MonoBehaviour {
 	//it also may do some pre-processing of the code (such as giving a jump-to index to if statements)
 	private ArrayList Tokenize() {
 		//split at spaces
-		//TODO: split at linebreaks as well
-		string[] sp = code.Split(' ');
+		char[] delim = new char[2];
+		delim[0] = ' ';
+		delim[1] = '\n';
+		string[] sp = code.Split(delim);
 		ArrayList toks = new ArrayList();
 		toks.AddRange(sp);
 		
