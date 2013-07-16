@@ -114,6 +114,24 @@ public class mission_data : MonoBehaviour {
 		}
 	}
 	
+	/*
+	 * Takes a list of strings and returns true or false based on whether or not the input evaluates true or false
+	 */ 
+	bool eval_cond(ArrayList cond) {
+		//A single variable is evaluated ex: "float x"  
+		if(cond.Count == 2) {
+			//check var table
+			if (cond[0] as string == "float") {
+				//look up value of variable
+				//return true if it's nonzero
+			}
+			//other var table cases here
+		} else {
+			//case of an equality check - compare the value before the == to the value after the == 	
+		}
+		return true;
+	}
+	
 	//this splits the code at whitespace to provide a list of tokens
 	//it also may do some pre-processing of the code (such as giving a jump-to index to if statements)
 	private ArrayList Tokenize() {
