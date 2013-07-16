@@ -80,10 +80,38 @@ public class mission_data : MonoBehaviour {
 		//tokenize the code
 		//TODO: run this once, not every time the code is executed
 		ArrayList toks = Tokenize ();
+		/* debugging */ /*
 		foreach(string e in toks) {
 			print (e);	
 		}
 		Debug.Break();
+		*/
+		//TODO:
+		/*
+		 * Variable declarations
+		 * If statements
+		 * Module API calls
+		 * 
+		 * 
+		 * 
+		 */ 
+		
+		//Iterate over tokens, carrying out commands
+		for(int exe_pos = 0; exe_pos < toks.Count; exe_pos++) {
+			//reading in the token
+			string cur = toks[exe_pos] as string;
+			if(cur == "if") {
+				//evaluate if condition, move exe_pos to end of if block if the condition is false
+			} else if(cur == "float") {
+				//variable change, use float table
+			} else if(cur == "body") {
+				//needs more thought, but this will be used to keep track of planets (for example, the nav module will return a list of local planets)
+			} else if (cur == "mod") {
+				//a module api is about to be called, get the module name and method call from the next token, then get the results
+			} else {
+				//shouldn't happen?
+			}
+		}
 	}
 	
 	//this splits the code at whitespace to provide a list of tokens
