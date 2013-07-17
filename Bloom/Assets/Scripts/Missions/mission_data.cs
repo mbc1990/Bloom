@@ -81,25 +81,16 @@ public class mission_data : MonoBehaviour {
 	
 	//called from update, this method interprets the code and calls the various functions associated with the attached modules
 	//TODO: Exception handling & incorrect probe code handling 
-	void run_code() {
+	string run_code() {
 		//tokenize the code
 		//TODO: run this once, not every time the code is executed
 		ArrayList toks = Tokenize ();
-		/* debugging */ /*
+		/* debugging */ /* 
 		foreach(string e in toks) {
 			print (e);	
 		}
 		Debug.Break();
 		*/
-		//TODO:
-		/*
-		 * Variable declarations
-		 * If statements
-		 * Module API calls
-		 * 
-		 * 
-		 * 
-		 */ 
 		
 		//Iterate over tokens, carrying out commands
 		for(int exe_pos = 0; exe_pos < toks.Count; exe_pos++) {
@@ -109,13 +100,37 @@ public class mission_data : MonoBehaviour {
 				//evaluate if condition, move exe_pos to end of if block if the condition is false
 			} else if(cur == "float") {
 				//variable change, use float table
-				//use case is float name = expression
+				//Variable name
 				string v_name = toks[exe_pos+1] as string;
+				
 				//syntax error
-				if (toks[exe_pos + 2] != "=") {
-					print ("syntax error");
-					//somehow terminate code execution
+				if (toks[exe_pos + 2] as string != "=") {
+					return "syntax error around token "+exe_pos.ToString()+". Equal sign out of order";
 				}
+				
+				//get expression to evaluate (all tokens between "=" and ";")
+				ArrayList exp = new ArrayList();
+				int tok_count = exe_pos + 3;
+				do {
+					exp.Add(toks[tok_count]);
+					tok_count++;
+				} while (toks[tok_count] as string != ";");
+				
+				//nullable type - this lets null be returned in the error case that the expression passed in cannot be evaluated to a number
+				float? val = eval_math_exp(exp);
+				if(val.HasValue) {
+					fl_table[v_name] = val.Value;	
+				} else {
+					return "a math expression around token "+exe_pos.ToString()+" was invalid";	
+				}
+				
+				//float has been evaluated and the symbol table has been updated
+				//update the execution position to the token following the expression that was just evaluated
+				exe_pos = tok_count + 1; // the +1 is because the execution position is currently at the semicolon ending the expression 
+				
+				/*testing*/ /*
+				print ("fl table: "+fl_table[v_name].ToString());
+				Debug.Break(); */
 				
 				
 			} else if(cur == "body") {
@@ -126,6 +141,8 @@ public class mission_data : MonoBehaviour {
 				//shouldn't happen?
 			}
 		}
+		
+		return "success";
 	}
 	
 	/*
@@ -133,8 +150,30 @@ public class mission_data : MonoBehaviour {
 	 * Recursive left-to-right evaluation (?)
 	 * Must also be able to evaluate module things to float values
 	 */
-	float eval_math_exp(ArrayList exp) {
-		return 0;
+	//float is returned as a nullable type
+	float? eval_math_exp(ArrayList exp) {
+		print ("evaluating math expression...");
+		/* debugging */ /*
+		foreach(string tok in exp) {
+			print (tok);	
+		}
+		Debug.Break ();
+		*/
+		
+		//base case: arraylist of length 1
+		if(exp.Count == 1) {
+			float val = new float();
+			if (float.TryParse(exp[0] as string,out val)) {
+				return val;	
+			} else {
+				//float parsing failed, return null as error indicator
+				return null;
+			}
+		} else {
+			//recursively return null if the recursive call returns null, otherwise evaluate	
+		}
+		
+		return null;
 	}
 	
 	/*
