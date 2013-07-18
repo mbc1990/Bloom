@@ -137,6 +137,7 @@ public class mission_data : MonoBehaviour {
 				//needs more thought, but this will be used to keep track of planets (for example, the nav module will return a list of local planets)
 			} else if (cur == "mod") {
 				//a module api is about to be called, get the module name and method call from the next token, then get the results
+				
 			} else {
 				//shouldn't happen?
 			}
@@ -170,7 +171,26 @@ public class mission_data : MonoBehaviour {
 				return null;
 			}
 		} else {
-			//recursively return null if the recursive call returns null, otherwise evaluate	
+			//recursively return null if the recursive call returns null, otherwise evaluate
+			string cur = exp[0] as string;
+			//recursively call the spliced array (1:)
+			if(cur == "(") {
+				
+			} else if(cur == ")") {
+				
+			} else if(cur == "*") {
+			
+			} else if (cur == "/") {
+				
+			} else if (cur == "%") {
+				
+			} else if (cur == "+") {
+				
+			} else if (cur == "-") {
+				
+			} else{
+				
+			}
 		}
 		
 		return null;
@@ -180,7 +200,8 @@ public class mission_data : MonoBehaviour {
 	 * Takes a list of strings and returns true or false based on whether or not the input evaluates true or false
 	 */ 
 	bool eval_cond(ArrayList cond) {
-		//A single variable is evaluated ex: "float x"  
+		//A single variable is evaluated (base case)
+		//TODO: Fix this 
 		if(cond.Count == 2) {
 			//check var table
 			if (cond[0] as string == "float") {
