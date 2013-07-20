@@ -22,6 +22,10 @@ public class mod_nav : MonoBehaviour {
 	
 	/*API*/
 	
+	//fake method for testing
+	public float AddOne(float f) {
+		return f + 1;	
+	}
 	//returns a list of references to planets in the solar system and their distances 
 	public ArrayList GetLocalPlanets() {
 		return null;	

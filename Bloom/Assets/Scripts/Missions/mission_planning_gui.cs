@@ -77,6 +77,7 @@ public class mission_planning_gui : MonoBehaviour {
 			GameObject module = new GameObject(); //a module (in the game design sense) consists of a module gameobject with module specific scripts attached, as well as the module_info scrpt
 			module.AddComponent<module_info>();
 			module.GetComponent<module_info>().mod_name = "Nav";
+			module.AddComponent<mod_nav>(); //add the actual nav module api
 			data.modules.Add(module); //add the newly created module to the probe's list of modules
 			module.transform.parent = data.transform;
 		}

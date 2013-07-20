@@ -74,8 +74,11 @@ public class Manager : MonoBehaviour {
 		float live = UnityEngine.Random.Range(0, 1f);
 		p_script.liveable = (live < liveable) ? true : false;
 		
-		//resource X amount
-		p_script.resource_x = (int)UnityEngine.Random.Range (0, 400f);
+		//minerals amount
+		p_script.minerals = (int)UnityEngine.Random.Range (0, 400f);
+		
+		//energy amount
+		p_script.energy = UnityEngine.Random.Range(0, 10000f);
 		
 		//random size
 	//	float r_size = UnityEngine.Random.Range(.5f, 3);

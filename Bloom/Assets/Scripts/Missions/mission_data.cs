@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 /*
  * 
@@ -188,8 +189,30 @@ public class mission_data : MonoBehaviour {
 				
 			} else if (cur == "-") {
 				
-			} else{
+			} else if (cur == "mod"){
+				//case of treating a module api call as a number
+				//so get what the api call returns
+				//this is accomplished by parsing the method name and arguments, then using reflection to invoke the method name by the parsed string
+				string apicall = exp[1] as string;
+				string[] sp = apicall.Split(new char[] {'.'}, 2); //split by the first '.' character
+				string func = sp[1] as string;
+				string[] fargs = func.Split(new char[] {'(',')'});
+				//get attached API script
+				//TODO: reflection?
+				print("sp0: "+sp[0]);
+				print ("fargs0: "+fargs[0]);
+				print ("fargs1: "+fargs[1]);
+				if(sp[0] == "nav") {
+					mod_nav api = gameObject.transform.GetChild(0).GetComponent<mod_nav>();
+					switch (fargs[0]) {
+						case "AddOne":	
+							print("adding one");
+							print(api.AddOne(float.Parse(fargs[1])));
+							break;
+					}
+				} 
 				
+				Debug.Break();
 			}
 		}
 		
@@ -202,16 +225,12 @@ public class mission_data : MonoBehaviour {
 	bool eval_cond(ArrayList cond) {
 		//A single variable is evaluated (base case)
 		//TODO: Fix this 
-		if(cond.Count == 2) {
-			//check var table
-			if (cond[0] as string == "float") {
-				//look up value of variable
-				//return true if it's nonzero
-			}
-			//other var table cases here
+		if(cond.Count == 1) {
+			//check var tables
 		} else {
 			//case of an equality check - compare the value before the == to the value after the ==
-			//probably use eval_math_exp here
+			//split at the == and call eval_cond on each hal
+			
 		}
 		return true;
 	}

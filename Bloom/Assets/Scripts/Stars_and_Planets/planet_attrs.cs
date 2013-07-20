@@ -25,8 +25,11 @@ public class planet_attrs : MonoBehaviour {
 	//starts at 0, if it's liveable population may spread here
 	public int population;
 	
-	//amount of resource x in the planet
-	public int resource_x;
+	//amount of minerals in the planet
+	public int minerals;
+	
+	//amount of energy in the planet
+	public float energy;
 	
 	//TODO: native alien population mechanic
 	
