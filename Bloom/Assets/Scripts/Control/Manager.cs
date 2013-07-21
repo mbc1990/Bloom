@@ -12,15 +12,24 @@ public class Manager : MonoBehaviour {
 	//global vars
 	public GameObject homeworld;
 	
+	//list of planets in the solarsystem
+	public ArrayList pl_list = new ArrayList();
+	
+	//constants
+	//starting population of the homeworld
+	int STARTING_POP = 1000;
+	
 	
 	// Use this for initialization
 	void Start () {
+	
 		print("Starting home screen");
 		
 		//Generate home solar system
 		GameObject s = GenerateSolarSystem(new Vector3(0,0,0), .5f);
 		homeworld = GeneratePlanet(new Vector3(0,0,0), 1f);
 		homeworld.transform.localScale *= 2;
+		homeworld.GetComponent<planet_attrs>().population = STARTING_POP;
 		
 	}
 	
@@ -83,6 +92,9 @@ public class Manager : MonoBehaviour {
 		//random size
 	//	float r_size = UnityEngine.Random.Range(.5f, 3);
 	//	p.transform.localScale *= r_size;
+		
+		//add to list
+		pl_list.Add(p);
 		
 		return p;
 	}

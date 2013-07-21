@@ -71,7 +71,6 @@ public class mission_planning_gui : MonoBehaviour {
 		GUI.Label(new Rect(Screen.width - Screen.width/8 - 100,Screen.height/10 + 50,100,30), "Energy: ");
 		GUI.Label(new Rect(Screen.width - Screen.width/8 - 100,Screen.height/10 + 80,100,30), "Cost: ");
 		
-		//TODO: Prevent duplicates from being added
 		//buttons for adding a module
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+40,100,20), "Nav")) {
 			if(probe.GetComponent<mod_nav>() == null) {
