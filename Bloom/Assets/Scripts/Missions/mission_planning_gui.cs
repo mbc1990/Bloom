@@ -71,27 +71,42 @@ public class mission_planning_gui : MonoBehaviour {
 		GUI.Label(new Rect(Screen.width - Screen.width/8 - 100,Screen.height/10 + 50,100,30), "Energy: ");
 		GUI.Label(new Rect(Screen.width - Screen.width/8 - 100,Screen.height/10 + 80,100,30), "Cost: ");
 		
+		//TODO: Prevent duplicates from being added
 		//buttons for adding a module
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+40,100,20), "Nav")) {
-			probe.AddComponent<mod_nav>();
+			if(probe.GetComponent<mod_nav>() == null) {
+				probe.AddComponent<mod_nav>();
+			}
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+60,100,20), "Battery")) {
-			probe.AddComponent<mod_bat>();
+			if(probe.GetComponent<mod_bat>() == null) {
+				probe.AddComponent<mod_bat>();
+			}
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+80,100,20), "Energy Station")) {
-			probe.AddComponent<mod_est>();
+			if(probe.GetComponent<mod_est>() == null) {
+				probe.AddComponent<mod_est>();
+			}
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+100,100,20), "Extractor")) {
-			probe.AddComponent<mod_ext>();
+			if(probe.GetComponent<mod_ext>() == null) {
+				probe.AddComponent<mod_ext>();
+			}
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+120,100,20), "Sensor")) {
-			probe.AddComponent<mod_sensor>();
+			if(probe.GetComponent<mod_sensor>() == null) {
+				probe.AddComponent<mod_sensor>();
+			}
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+140,100,20), "Transport")) {
-			probe.AddComponent<mod_transport>();
+			if(probe.GetComponent<mod_transport>() == null) {
+				probe.AddComponent<mod_transport>();
+			}
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+160,100,20), "Comm")) {
-			probe.AddComponent<mod_comm>();
+			if(probe.GetComponent<mod_comm>() == null) {
+				probe.AddComponent<mod_comm>();
+			}
 		}
 		
 		//buttons for deleting a module 
