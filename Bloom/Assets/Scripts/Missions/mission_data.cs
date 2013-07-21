@@ -198,12 +198,11 @@ public class mission_data : MonoBehaviour {
 				string func = sp[1] as string;
 				string[] fargs = func.Split(new char[] {'(',')'});
 				//get attached API script
-				//TODO: reflection?
 				print("sp0: "+sp[0]);
 				print ("fargs0: "+fargs[0]);
 				print ("fargs1: "+fargs[1]);
 				if(sp[0] == "nav") {
-					mod_nav api = gameObject.transform.GetChild(0).GetComponent<mod_nav>();
+					mod_nav api = gameObject.GetComponent<mod_nav>();
 					switch (fargs[0]) {
 						case "AddOne":	
 							print("adding one");

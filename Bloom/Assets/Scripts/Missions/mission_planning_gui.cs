@@ -72,21 +72,18 @@ public class mission_planning_gui : MonoBehaviour {
 		GUI.Label(new Rect(Screen.width - Screen.width/8 - 100,Screen.height/10 + 80,100,30), "Cost: ");
 		
 		//buttons for each available module that attach the corresponding named module_info script & module_behavior script to the mission_data's list of modules
-		//TODO: Refactor this 
+		//TODO: fix the parenting problem, or add iterating over all children 
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+40,100,20), "Nav")) {
-			GameObject module = new GameObject(); //a module (in the game design sense) consists of a module gameobject with module specific scripts attached, as well as the module_info scrpt
-			module.AddComponent<module_info>();
-			module.GetComponent<module_info>().mod_name = "Nav";
-			module.AddComponent<mod_nav>(); //add the actual nav module api
-			data.modules.Add(module); //add the newly created module to the probe's list of modules
-			module.transform.parent = data.transform;
+			probe.AddComponent<mod_nav>();
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+60,100,20), "Battery")) {
-			GameObject module = new GameObject(); //a module (in the game design sense) consists of a module gameobject with module specific scripts attached, as well as the module_info scrpt
+		/*	GameObject module = new GameObject(); //a module (in the game design sense) consists of a module gameobject with module specific scripts attached, as well as the module_info scrpt
 			module.AddComponent<module_info>();
 			module.GetComponent<module_info>().mod_name = "Battery";
 			data.modules.Add(module); //add the newly created module to the probe's list of modules
 			module.transform.parent = data.transform;
+			*/
+			//probe.AddComponent<mod_nav>();
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+80,100,20), "Energy Station")) {
 			GameObject module = new GameObject(); //a module (in the game design sense) consists of a module gameobject with module specific scripts attached, as well as the module_info scrpt
@@ -103,11 +100,7 @@ public class mission_planning_gui : MonoBehaviour {
 			module.transform.parent = data.transform;
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+120,100,20), "Sensor")) {
-			GameObject module = new GameObject(); //a module (in the game design sense) consists of a module gameobject with module specific scripts attached, as well as the module_info scrpt
-			module.AddComponent<module_info>();
-			module.GetComponent<module_info>().mod_name = "Sensor";
-			data.modules.Add(module); //add the newly created module to the probe's list of modules
-			module.transform.parent = data.transform;
+			probe.AddComponent<mod_sensor>();
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+140,100,20), "Transport")) {
 			GameObject module = new GameObject(); //a module (in the game design sense) consists of a module gameobject with module specific scripts attached, as well as the module_info scrpt
@@ -124,22 +117,23 @@ public class mission_planning_gui : MonoBehaviour {
 			module.transform.parent = data.transform;
 		}
 		
-		//buttons for each module already attached to the mission_data's list of modules, to remove them from the list
+		
+		//buttons for deleting a module 
 		int button_offset = 1;
-		ArrayList to_remove = new ArrayList();
-		foreach (GameObject g in data.modules) {
-			module_info inf = g.GetComponent<module_info>();
-			if(GUI.Button(new Rect(Screen.width/8 + 100,Screen.height/10+20 + 20*button_offset,100,20), inf.mod_name)) {
-				//add to removal list to avoid concurrent modification exception (or whatever C# calls that)
-				to_remove.Add(g);
+		if(probe.GetComponent<mod_nav>() != null) {
+			if(GUI.Button(new Rect(Screen.width/8 + 100,Screen.height/10+20 + 20*button_offset,100,20), "Nav")) {
+				//delete the component
+				Destroy(probe.GetComponent<mod_nav>());
 			}
-			button_offset ++;
+			button_offset++;
 		}
-		//Every frame (actually, more like twice per frame, since this is in OnGUI) remove the gameobjects (modules) that the use has selected to remove in the GUI
-		for (int i = 0; i < to_remove.Count; i++) {
-			GameObject g = to_remove[i] as GameObject; 
-			data.modules.Remove(g);
-			Destroy(g);
+		if(probe.GetComponent<mod_sensor>() != null) {
+			if(GUI.Button(new Rect(Screen.width/8 + 100,Screen.height/10+20 + 20*button_offset,100,20), "Sensor")) {
+				//delete the component
+				Destroy(probe.GetComponent<mod_sensor>());
+			}
+			button_offset++;
 		}
+		
 	}
 }

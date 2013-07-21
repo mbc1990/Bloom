@@ -8,6 +8,8 @@ using System.Collections;
  * 
  */ 
 public class mod_nav : MonoBehaviour {
+	
+	public string mod_name = "Nav";
 
 	// Use this for initialization
 	void Start () {
