@@ -71,52 +71,28 @@ public class mission_planning_gui : MonoBehaviour {
 		GUI.Label(new Rect(Screen.width - Screen.width/8 - 100,Screen.height/10 + 50,100,30), "Energy: ");
 		GUI.Label(new Rect(Screen.width - Screen.width/8 - 100,Screen.height/10 + 80,100,30), "Cost: ");
 		
-		//buttons for each available module that attach the corresponding named module_info script & module_behavior script to the mission_data's list of modules
-		//TODO: fix the parenting problem, or add iterating over all children 
+		//buttons for adding a module
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+40,100,20), "Nav")) {
 			probe.AddComponent<mod_nav>();
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+60,100,20), "Battery")) {
-		/*	GameObject module = new GameObject(); //a module (in the game design sense) consists of a module gameobject with module specific scripts attached, as well as the module_info scrpt
-			module.AddComponent<module_info>();
-			module.GetComponent<module_info>().mod_name = "Battery";
-			data.modules.Add(module); //add the newly created module to the probe's list of modules
-			module.transform.parent = data.transform;
-			*/
-			//probe.AddComponent<mod_nav>();
+			probe.AddComponent<mod_bat>();
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+80,100,20), "Energy Station")) {
-			GameObject module = new GameObject(); //a module (in the game design sense) consists of a module gameobject with module specific scripts attached, as well as the module_info scrpt
-			module.AddComponent<module_info>();
-			module.GetComponent<module_info>().mod_name = "Energy Station";
-			data.modules.Add(module); //add the newly created module to the probe's list of modules
-			module.transform.parent = data.transform;
+			probe.AddComponent<mod_est>();
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+100,100,20), "Extractor")) {
-			GameObject module = new GameObject(); //a module (in the game design sense) consists of a module gameobject with module specific scripts attached, as well as the module_info scrpt
-			module.AddComponent<module_info>();
-			module.GetComponent<module_info>().mod_name = "Extractor";
-			data.modules.Add(module); //add the newly created module to the probe's list of modules
-			module.transform.parent = data.transform;
+			probe.AddComponent<mod_ext>();
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+120,100,20), "Sensor")) {
 			probe.AddComponent<mod_sensor>();
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+140,100,20), "Transport")) {
-			GameObject module = new GameObject(); //a module (in the game design sense) consists of a module gameobject with module specific scripts attached, as well as the module_info scrpt
-			module.AddComponent<module_info>();
-			module.GetComponent<module_info>().mod_name = "Transport";
-			data.modules.Add(module); //add the newly created module to the probe's list of modules
-			module.transform.parent = data.transform;
+			probe.AddComponent<mod_transport>();
 		}
 		if(GUI.Button(new Rect(Screen.width/8,Screen.height/10+160,100,20), "Comm")) {
-			GameObject module = new GameObject(); //a module (in the game design sense) consists of a module gameobject with module specific scripts attached, as well as the module_info scrpt
-			module.AddComponent<module_info>();
-			module.GetComponent<module_info>().mod_name = "Comm";
-			data.modules.Add(module); //add the newly created module to the probe's list of modules
-			module.transform.parent = data.transform;
+			probe.AddComponent<mod_comm>();
 		}
-		
 		
 		//buttons for deleting a module 
 		int button_offset = 1;
@@ -127,10 +103,45 @@ public class mission_planning_gui : MonoBehaviour {
 			}
 			button_offset++;
 		}
+		if(probe.GetComponent<mod_bat>() != null) {
+			if(GUI.Button(new Rect(Screen.width/8 + 100,Screen.height/10+20 + 20*button_offset,100,20), "Battery")) {
+				//delete the component
+				Destroy(probe.GetComponent<mod_bat>());
+			}
+			button_offset++;
+		}
+		if(probe.GetComponent<mod_est>() != null) {
+			if(GUI.Button(new Rect(Screen.width/8 + 100,Screen.height/10+20 + 20*button_offset,100,20), "Energy Station")) {
+				//delete the component
+				Destroy(probe.GetComponent<mod_est>());
+			}
+			button_offset++;
+		}
+		if(probe.GetComponent<mod_ext>() != null) {
+			if(GUI.Button(new Rect(Screen.width/8 + 100,Screen.height/10+20 + 20*button_offset,100,20), "Extractor")) {
+				//delete the component
+				Destroy(probe.GetComponent<mod_ext>());
+			}
+			button_offset++;
+		}
 		if(probe.GetComponent<mod_sensor>() != null) {
 			if(GUI.Button(new Rect(Screen.width/8 + 100,Screen.height/10+20 + 20*button_offset,100,20), "Sensor")) {
 				//delete the component
 				Destroy(probe.GetComponent<mod_sensor>());
+			}
+			button_offset++;
+		}
+		if(probe.GetComponent<mod_transport>() != null) {
+			if(GUI.Button(new Rect(Screen.width/8 + 100,Screen.height/10+20 + 20*button_offset,100,20), "Transport")) {
+				//delete the component
+				Destroy(probe.GetComponent<mod_transport>());
+			}
+			button_offset++;
+		}
+		if(probe.GetComponent<mod_comm>() != null) {
+			if(GUI.Button(new Rect(Screen.width/8 + 100,Screen.height/10+20 + 20*button_offset,100,20), "Comm")) {
+				//delete the component
+				Destroy(probe.GetComponent<mod_comm>());
 			}
 			button_offset++;
 		}
