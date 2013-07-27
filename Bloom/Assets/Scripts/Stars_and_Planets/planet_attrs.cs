@@ -31,12 +31,17 @@ public class planet_attrs : MonoBehaviour {
 	//amount of energy in the planet
 	public float energy;
 	
-	//TODO: native alien population mechanic
+	//last time p/e/r was updated
+	float last_update;
 	
+	//constants 
+	//how often population/energy/rocks are updated (in seconds)
+	static float TICK_SIZE = 5;
 	
 	// Use this for initialization
 	void Start () {		
 		pl_name = UnityEngine.Random.Range(100000f,700000f);
+		last_update = Time.time;
 	}
 	
 	// Update is called once per frame
@@ -44,5 +49,23 @@ public class planet_attrs : MonoBehaviour {
 		//orbit sun
 		transform.RotateAround(sun_location, new Vector3(0,0,1), speed*Time.deltaTime);
 		
+		//updating of energy/minerals/population based on functions
+		if(!GUI_locks.PLAN_MISSION && Time.time - last_update >= TICK_SIZE) {
+			//update last_update
+			last_update = Time.time;
+			
+			//TODO: design the functions	
+			//
+			if(population > 0 && minerals > 0) {
+				minerals--;
+				energy++;
+			} 
+			
+			if(minerals <= 0) {
+				population--;
+				energy = energy > 0 ? energy-1 : energy;
+			}
+			
+		}
 	}
 }
