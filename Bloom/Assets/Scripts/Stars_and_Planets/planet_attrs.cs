@@ -16,6 +16,8 @@ public class planet_attrs : MonoBehaviour {
 	
 	//name (random float)
 	public float pl_name;
+
+        public string planet_name;
 	
 	//**attributes**\\
 	//TODO: Base this mechanic on real factors such as atmosphere, temperature, and resources
@@ -43,6 +45,7 @@ public class planet_attrs : MonoBehaviour {
 		pl_name = UnityEngine.Random.Range(100000f,700000f);
 		last_update = Time.time;
 	}
+        
 	
 	// Update is called once per frame
 	void Update () {
@@ -54,7 +57,7 @@ public class planet_attrs : MonoBehaviour {
 			//update last_update
 			last_update = Time.time;
 			
-			//TODO: design the functions	
+			//TODO: design the functions
 			//
 			if(population > 0 && minerals > 0) {
 				minerals--;

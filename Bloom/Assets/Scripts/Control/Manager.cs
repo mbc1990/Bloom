@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
+using Interpreter;
 
 public class Manager : MonoBehaviour {
 	
@@ -31,6 +33,25 @@ public class Manager : MonoBehaviour {
 		homeworld.transform.localScale *= 2;
 		homeworld.GetComponent<planet_attrs>().population = STARTING_POP;
 		
+		//testing token stuff
+		//TODO: remove this code
+		/*
+		IdentifierToken t = new IdentifierToken("futurevar");
+		OperatorToken ot = new OperatorToken('+');
+		List<Token> toks = new List<Token>();
+		toks.Add(t);
+		toks.Add(ot);
+		for(int i = 0; i < 2; i++) {
+			string tp = toks[i].GetTokenType();
+			if(tp == "identifier") {
+				IdentifierToken itk = toks[i] as IdentifierToken;
+				print (itk.GetValue());
+			} else if(tp == "operator") {
+				OperatorToken otk = toks[i] as OperatorToken;
+				print (otk.GetValue());
+			}
+		}
+		*/
 	}
 	
 	// Update is called once per frame
@@ -88,6 +109,9 @@ public class Manager : MonoBehaviour {
 		
 		//energy amount
 		p_script.energy = UnityEngine.Random.Range(0, 10000f);
+
+                //name
+                //pl_script.planet_name = GeneratePlanetName();
 		
 		//random size
 	//	float r_size = UnityEngine.Random.Range(.5f, 3);
@@ -98,6 +122,13 @@ public class Manager : MonoBehaviour {
 		
 		return p;
 	}
+
+         
+        string GeneratePlanetName() {
+//            int ran = UnityEngine.Random.Range(0, greeks.length()) as int;     
+//            print("Random greek number: "+ran);
+			return "";
+        }
 	
 	
 }

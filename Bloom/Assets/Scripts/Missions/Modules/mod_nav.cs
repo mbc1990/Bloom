@@ -10,10 +10,11 @@ using System.Collections;
 public class mod_nav : MonoBehaviour {
 	
 	public string mod_name = "Nav";
+	mission_data md;
 
 	// Use this for initialization
 	void Start () {
-	
+		md = gameObject.GetComponent<mission_data>();
 	}
 	
 	// Update is called once per frame
@@ -35,7 +36,7 @@ public class mod_nav : MonoBehaviour {
 	
 	//Changes the 'target' planet and sets 'in_orbit' to false, sending the probe to that planet
 	public void MoveToPlanet(GameObject target) {
-			
+		md.dest = target;
 	}
 	
 	//returns a reference to the current planet ('target')

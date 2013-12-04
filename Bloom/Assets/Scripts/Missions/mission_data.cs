@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
+using Interpreter;
+using System.Text.RegularExpressions;
 
 /*
  * 
@@ -76,9 +79,106 @@ public class mission_data : MonoBehaviour {
 			}
 			
 			//execute the probecode
-			run_code();
+			run_code_new();
+			Debug.Break();
 		}
 	}
+	
+	
+	//attempt no. 2 @ an interpreter
+	string run_code_new() {
+		List<Token> tokens = lexer(code);
+		for(var i = 0; i < tokens.Count; i++) {
+			if(tokens[i].GetTokenType() == "operator") {
+				OperatorToken o = tokens[i] as OperatorToken;	
+				print("Operator: "+o.GetValue());
+			} else if(tokens[i].GetTokenType() == "number") {
+				NumberToken n = tokens[i] as NumberToken;
+				print ("Number: "+n.GetValue());
+			} else if(tokens[i].GetTokenType() == "identifier") {
+				IdentifierToken t = tokens[i] as IdentifierToken;
+				print ("Identifier: "+t.GetValue());
+			}
+		}
+		return " ";	
+	}
+	
+	bool is_whitespace(string text) {
+		string[] whitespace = { " ", "\n" };
+		for(int i=0; i < whitespace.Length; i++) {
+			if(whitespace[i] == text) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	bool is_operator(string text) {
+		string[] op_arr = { "+", "-", "(", ")", "/", "*", "%", "^"}; //valid operators
+		for(int i=0; i < op_arr.Length; i++) {
+			if(op_arr[i] == text) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	bool is_digit(string text) {
+		string[] dig_arr = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",};
+		for(int i=0; i < dig_arr.Length; i++) {
+			if(dig_arr[i] == text) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	bool is_identifier(string text) {
+		string[] letters = {"a", "b", "c", "d", "e"};	
+		for(int i=0; i < letters.Length; i++) {
+			if(letters[i] == text) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	List<Token> lexer(string program) {
+		List<Token> toks = new List<Token>();
+		int loc = 0;
+		while(loc < program.Length) {
+			char next_character = program[loc];
+			if(is_whitespace(next_character.ToString())) {	
+				//do nothing
+				loc++;
+			} else if(is_operator(next_character.ToString())) {
+				OperatorToken o = new OperatorToken(next_character);	
+				toks.Add(o);
+				loc++;
+			} else if(is_digit(next_character.ToString())) {
+				string temp = next_character.ToString();
+				loc++;
+				while(loc < program.Length && is_digit(program[loc].ToString())) {
+					temp += program[loc].ToString();
+					loc++;
+				}
+				NumberToken n = new NumberToken(float.Parse(temp));
+				toks.Add (n);
+			} else if(is_identifier(next_character.ToString())) {
+				string temp = next_character.ToString();
+				loc++;
+				while(loc < program.Length && is_identifier(program[loc].ToString())) {
+					temp += program[loc].ToString();
+					loc++;
+				}
+				IdentifierToken t = new IdentifierToken(temp);
+				toks.Add (t);
+			}
+		}
+		return toks;
+	}
+	
+	
 	
 	//called from update, this method interprets the code and calls the various functions associated with the attached modules
 	//TODO: Exception handling & incorrect probe code handling 
@@ -138,6 +238,30 @@ public class mission_data : MonoBehaviour {
 				//needs more thought, but this will be used to keep track of planets (for example, the nav module will return a list of local planets)
 			} else if (cur == "mod") {
 				//a module api is about to be called, get the module name and method call from the next token, then get the results
+				ArrayList exp = new ArrayList();
+				int tok_count = exe_pos + 3;
+				do {
+					exp.Add(toks[tok_count]);
+					tok_count++;
+				} while (toks[tok_count] as string != ";");
+				
+				string apicall = exp[1] as string;
+				string[] sp = apicall.Split(new char[] {'.'}, 2); //split by the first '.' character
+				string func = sp[1] as string;
+				string[] fargs = func.Split(new char[] {'(',')'});
+				//get attached API script
+				print("sp0: "+sp[0]);
+				print ("fargs0: "+fargs[0]);
+				print ("fargs1: "+fargs[1]);
+				if(sp[0] == "nav") {
+					mod_nav api = gameObject.GetComponent<mod_nav>();
+					switch (fargs[0]) {
+						case "AddOne":	
+							print("adding one");
+							print(api.AddOne(float.Parse(fargs[1])));
+							break;
+					}
+				} 
 				
 			} else {
 				//shouldn't happen?
@@ -146,6 +270,8 @@ public class mission_data : MonoBehaviour {
 		
 		return "success";
 	}
+	
+	
 	
 	/*
 	 * Evaluates a mathematical expression (floats only)
